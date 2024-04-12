@@ -18,3 +18,7 @@ class FinanceManager:
                 
 #Kevin Pham
 def add_budget():
+    
+    
+#Miles Rousseau
+def get_transactions():
