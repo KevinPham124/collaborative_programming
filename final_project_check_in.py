@@ -22,3 +22,38 @@ def add_budget():
     
 #Miles Rousseau
 def get_transactions():
+    
+#Bryan Moody
+class SortedSavingsGoals:
+    def __init__(self, goals, income, savings = 0, \
+        sort_by = 'still needed'):
+        self.goals = goals
+        self.income = income
+        self.savings = savings
+        self.sort_by = sort_by
+
+    def monthly_savings_calc(self, goal):
+        remaining_to_goal = goal - self.savings
+        monthly_savings_needed = remaining_to_goal / 12
+        return {
+            'savings needed': monthly_savings_needed,
+            'how much of income is needed': 
+                ((monthly_savings_needed / self.income) * 100)
+        }
+
+    def money_goals(self):
+        end_results = [self.monthly_savings_calc(goal) \
+            for goal in self.goals]
+        key = 'savings needed' if self.sort_by == 'still needed' \
+            else 'how much of income is needed'
+        end_results.sort(key = lambda var: var[key], reverse = True)
+        return end_results
+        
+goals = [5000]
+income = 3000
+savings = 500
+savings_calc = SortedSavingsGoals(goals, income, \
+    savings, 'percentage')
+end_goals_sorted = savings_calc.money_goals()
+
+print(end_goals_sorted)
