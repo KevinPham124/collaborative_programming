@@ -5,7 +5,7 @@ code doesn't have to work however it has to do SOMETHING. The parts we don't hav
 working, we just say our plan about what its supposed to do.
 
 - We all present a piece of the demo and final project. The demo presentation
-should be about 5 minutes. Idk about the final
+should be about 5 minutes. Idk about the final (for now).
 
 - (Final Project Specific)
 We need to have a seperate pdf or markdown file "README" that explains parts
