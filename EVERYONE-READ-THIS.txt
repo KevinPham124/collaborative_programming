@@ -4,8 +4,16 @@ These are quick notes Aric has said about the final project / demo
 code doesn't have to work however it has to do SOMETHING. The parts we don't have
 working, we just say our plan about what its supposed to do.
 
-- We all present a piece of the demo and final project. The demo presentation
-should be about 5 minutes. Idk about the final (for now).
+- We all present a piece of the demo and final project. The demo AND final presentation
+should be about 5 minutes.
+
+- (Final Presentation Specific)
+Elevator pitch. A brief overview of our code. Why we choose it, what it generally
+does. We don't have to review every single line of the code. Just what we think
+would be interesting towards the class. 
+
+- (Final Presentation Specific)
+We all have to present. (Basically our parts of the code)
 
 - (Final Project Specific)
 We need to have a seperate pdf or markdown file "README" that explains parts
