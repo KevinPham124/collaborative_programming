@@ -39,26 +39,32 @@ class Budget:
     
     
 #Miles Rousseau
-import datetime
+from datetime import datetime
 
-def get_transactions(filter_type=None, filter_value=None):
-    data = load_data
-    for entry in data:
-        if entry['date']:
+class findtransactions:
+    # Kinda of works with hard-codes values (FOR NOW).
+    # Goal is to do something like (python 'script-here' date 05-0x3-2024)
+
+
+ def get_transactions(self, filter_type=None, filter_value=None):
+        
+        for entry in self.data:
+         if entry['date']:
             entry['date'] = datetime.strptime(entry['date'])
             
-    filtered_data = []
-    if filter_type and filter_value:
-        for entry in data:
-            if filter_type == 'date' and entry['date'] == datetime.strptime(entry['date']):
-                filtered_data.append(entry)
-            elif filter_type == 'amount' and float(entry['amount']) == float (filter_value):
-                filtered_data.append(entry)
-            elif filter_type == 'type' and entry['type'] == filter_value:
-                filtered_data.append(entry)
-    else:
-        filtered_data = data
-    return filtered_data
+        filtered_data = []
+        if filter_type and filter_value:
+            for entry in self.data:
+                if filter_type == 'date' and entry['date'] == datetime.strptime(entry['date']):
+                    filtered_data.append(entry)
+                elif filter_type == 'amount' and float(entry['amount']) == float (filter_value):
+                    filtered_data.append(entry)
+                elif filter_type == 'type' and entry['type'] == filter_value:
+                    filtered_data.append(entry)
+        else:
+            filtered_data = self.data
+            
+        return filtered_data
     
     
 #Bryan Moody
