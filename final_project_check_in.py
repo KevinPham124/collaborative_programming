@@ -21,7 +21,10 @@ class FinanceManager:
                     self.data.append(content)
         except FileNotFoundError:
             print("This file does not exist, do you mean 'finance.txt?'")
-                
+    def save_data(self):
+        with open(self.filepath,"w") as file:
+            for item in self.data:
+                file.write(','.join(item)+'\n')            
                 
 #Kevin Pham
 # Calculates total expenses by summing up expenses.
