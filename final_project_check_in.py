@@ -1,9 +1,15 @@
-# INST326 Final project check-in
+# INST326 Final project check-in (Group 6)
+
+# Currently, everyone has written their own functions and classes that will 
+# address certain challenges for the final project. Our next step is to analyze
+# each member's code and find out how to make them function better with each 
+# other and become one cohesive program.
+
 import argparse
 
 #Kirk Laryea
 class FinanceManager:
-    def __init(self,filepath):
+    def __init__(self,filepath):
         self.filepath=filepath
         self.data=[]
     def load_data(self):
@@ -11,17 +17,49 @@ class FinanceManager:
             with open(self.filepath,'r',encoding='utf-8') as f:
                 self.data=[]
                 for line in f.readlines():
-                    content=line.strip().splt(',')
+                    content=line.strip().split(',')
                     self.data.append(content)
         except FileNotFoundError:
             print("This file does not exist, do you mean 'finance.txt?'")
                 
 #Kevin Pham
-def add_budget():
+class Budget:
+    def __init__(self):
+        self.expenses = {}
+        
+    def set_budget(self, expense_category, amount):
+        self.expenses[expense_category] = amount
+        
+    def get_budget(self, category):
+        return self.expenses.get(category, 0)
+ 
+    def delete_budget(self, category):
+        if category in self.expenses:
+            del self.expenses[category]
     
     
 #Miles Rousseau
-def get_transactions():
+import datetime
+
+def get_transactions(filter_type=None, filter_value=None):
+    data = load_data
+    for entry in data:
+        if entry['date']:
+            entry['date'] = datetime.strptime(entry['date'])
+            
+    filtered_data = []
+    if filter_type and filter_value:
+        for entry in data:
+            if filter_type == 'date' and entry['date'] == datetime.strptime(entry['date']):
+                filtered_data.append(entry)
+            elif filter_type == 'amount' and float(entry['amount']) == float (filter_value):
+                filtered_data.append(entry)
+            elif filter_type == 'type' and entry['type'] == filter_value:
+                filtered_data.append(entry)
+    else:
+        filtered_data = data
+    return filtered_data
+    
     
 #Bryan Moody
 class SortedSavingsGoals:
