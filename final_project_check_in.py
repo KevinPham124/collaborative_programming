@@ -49,11 +49,11 @@ class SortedSavingsGoals:
         end_results.sort(key = lambda var: var[key], reverse = True)
         return end_results
         
-goals = [5000]
+goals = [5000, 10000, 15000]
 income = 3000
 savings = 500
-savings_calc = SortedSavingsGoals(goals, income, \
-    savings, 'percentage')
-end_goals_sorted = savings_calc.money_goals()
 
-print(end_goals_sorted)
+sort_by = 'percentage'
+savings_goals_instance = SortedSavingsGoals(goals, income, savings, sort_by)
+
+print(savings_goals_instance.money_goals())
