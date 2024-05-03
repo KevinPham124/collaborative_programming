@@ -46,7 +46,7 @@ class findtransactions:
     # Goal is to do something like (python 'script-here' date 05-0x3-2024)
 
 
- def get_transactions(self, filter_type=None, filter_value=None):
+    def get_transactions(self, filter_type=None, filter_value=None):
         
         for entry in self.data:
          if entry['date']:
