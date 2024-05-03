@@ -22,20 +22,43 @@ class FinanceManager:
         except FileNotFoundError:
             print("This file does not exist, do you mean 'finance.txt?'")
                 
+                
 #Kevin Pham
-class Budget:
-    def __init__(self):
-        self.expenses = {}
-        
-    def set_budget(self, expense_category, amount):
-        self.expenses[expense_category] = amount
-        
-    def get_budget(self, category):
-        return self.expenses.get(category, 0)
- 
-    def delete_budget(self, category):
-        if category in self.expenses:
-            del self.expenses[category]
+# Calculates total expenses by summing up expenses.
+# Computes savings by subtracting total expenses from income.
+# Constructs dictionary budget containing income, total expenses, and savings.
+# Returns budget dictionary.
+def budget_per_month(income, expenses):
+    total_expenses = sum(expenses)
+    savings = income - total_expenses
+    
+    budget = {
+        "Income": income,
+        "Total Expenses": total_expenses,
+        "Savings": savings
+    }
+    
+    return budget
+
+# Prompts user to enter monthly income and number of expenses.
+income = float(input("Please enter your monthly income ($): "))
+num_expenses = int(input("Please enter the number of expenses that you have: "))
+
+# Using a loop, it asks the user to enter the amount for each expense and stores 
+# them in a list named expenses.
+expenses = []
+for exp in range(num_expenses):
+    expense = float(input(f"Please enter the amount for expense #{exp+1}: "))
+    expenses.append(expense)
+
+# Calls budget_per_month function with provided income and expenses.
+budget = budget_per_month(income, expenses)
+
+# Iterates over the items in the budget dictionary and prints each category 
+# (income, total expenses, savings) along with its corresponding amount.
+print("\nSummary:")
+for category, amount in budget.items():
+    print(f"{category}:${amount:.2f}")
     
     
 #Miles Rousseau
