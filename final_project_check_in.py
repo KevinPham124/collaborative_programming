@@ -7,36 +7,45 @@
 #testing
 import argparse
 
-#Kirk Laryea
+#Kirk Laryea      
 class FinanceManager:
-    def __init__(self,filepath):
-        self.filepath=filepath
-        self.data=[]
-    def load_data(self):
-        try:
-            with open(self.filepath,'r',encoding='utf-8') as f:
-                self.data=[]
-                for line in f.readlines():
-                    content=line.strip().split(',')
-                    self.data.append(content)
-        except FileNotFoundError:
-            print("This file does not exist, do you mean 'finance.txt?'")
+    def __init__(self, filepath):
+        self.filepath = filepath
+        self.statement = {}
+
+    def set_statement(self, budget):
+        self.statement = budget  
+    def date(self):
+        month = self.statement.get("Month", "N/A")
+        day = self.statement.get("Day", "N/A")
+        year = self.statement.get("Year", "N/A")
+        return f"{month}/{day}/{year}"
+    
     def save_data(self):
-        with open(self.filepath,"w") as file:
-            for item in self.data:
-                file.write(','.join(item)+'\n')        
-        
+        try:
+            with open(self.filepath, "w", encoding="utf-8") as file:
+                formatted_date=self.date()
+                file.write(f"Budget Summary for {formatted_date}\n")
+                file.write(f"Income: ${self.statement['Income']:.2f}\n")
+                file.write(f"Total Expenses: ${self.statement['Total Expenses']:.2f}\n")
+                file.write(f"Savings: ${self.statement['Savings']:.2f}\n")
+            print("Budget summary saved successfully.")
+        except Exception as e:
+            print("Error saving data:", e)        
                 
 #Kevin Pham
 # Calculates total expenses by summing up expenses.
 # Computes savings by subtracting total expenses from income.
 # Constructs dictionary budget containing income, total expenses, and savings.
 # Returns budget dictionary.
-def budget_per_month(income, expenses):
+def budget_per_month(month,day,year,income, expenses):
     total_expenses = sum(expenses)
     savings = income - total_expenses
     
     budget = {
+        "Month":month,
+        "Day":day,
+        "Year":year,
         "Income": income,
         "Total Expenses": total_expenses,
         "Savings": savings
@@ -44,25 +53,28 @@ def budget_per_month(income, expenses):
     
     return budget
 
-# Prompts user to enter monthly income and number of expenses.
+
+months=["January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"]
+month = input("Please enter the current month: ")
+if month not in months:
+    raise ValueError (f"Invalid month")
+day = int(input("Please enter the current day of the month: "))
+year=int(input("Please enter the current year: "))
 income = float(input("Please enter your monthly income ($): "))
 num_expenses = int(input("Please enter the number of expenses that you have: "))
 
-# Using a loop, it asks the user to enter the amount for each expense and stores 
-# them in a list named expenses.
 expenses = []
-for exp in range(num_expenses):
-    expense = float(input(f"Please enter the amount for expense #{exp+1}: "))
+for i in range(num_expenses):
+    expense = float(input(f"Please enter the amount for expense #{i + 1}: "))
     expenses.append(expense)
 
-# Calls budget_per_month function with provided income and expenses.
-budget = budget_per_month(income, expenses)
 
-# Iterates over the items in the budget dictionary and prints each category 
-# (income, total expenses, savings) along with its corresponding amount.
-print("\nSummary:")
-for category, amount in budget.items():
-    print(f"{category}:${amount:.2f}")
+budget = budget_per_month(month,day,year, income, expenses)
+file_path = "finance.txt"  
+budget_manager = FinanceManager(file_path)
+budget_manager.set_statement(budget) 
+budget_manager.save_data() 
     
     
 #Miles Rousseau
@@ -127,4 +139,4 @@ savings = 500
 sort_by = 'percentage'
 savings_goals_instance = SortedSavingsGoals(goals, income, savings, sort_by)
 
-print(savings_goals_instance.money_goals())
+#print(savings_goals_instance.money_goals())
