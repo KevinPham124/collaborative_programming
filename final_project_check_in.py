@@ -25,7 +25,7 @@ class FinanceManager:
         try:
             with open(self.filepath, "a", encoding="utf-8") as file:
                 seperator='- - - - - - - - - - - - - - - -'
-                file.write(f'\n{seperator}\n')
+                file.write(f'{seperator}\n')
                 formatted_date=self.date()
                 file.write(f"Budget Summary for {formatted_date}\n")
                 file.write(f"Income: ${self.statement['Income']:.2f}\n")
