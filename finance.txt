@@ -3,4 +3,4 @@ expense,Transportation,00.0
 budget,Food,300.0
 budget,Transportation,150.0
 goal,saving,1000.0
-income,Salary,2000.0
+
