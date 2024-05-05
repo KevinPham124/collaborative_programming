@@ -4,7 +4,7 @@
 # address certain challenges for the final project. Our next step is to analyze
 # each member's code and find out how to make them function better with each 
 # other and become one cohesive program.
-#testing
+
 import argparse
 import sys
 
@@ -17,18 +17,17 @@ class FinanceManager:
     def set_statement(self, budget):
         self.statement = budget  
     def date(self):
-        month = self.statement.get("Month", "N/A")
-        day = self.statement.get("Day", "N/A")
-        year = self.statement.get("Year", "N/A")
-        return f"{month}/{day}/{year}"
+        month = self.statement.get("Month")
+        day = self.statement.get("Day")
+        year = self.statement.get("Year")
+        return f"{month}-{day}-{year}"
     
     def save_data(self):
         try:
             with open(self.filepath, "a", encoding="utf-8") as file:
                 seperator='- - - - - - - - - - - - - - - -'
                 file.write(f'{seperator}\n')
-                formatted_date=self.date()
-                file.write(f"Budget Summary for {formatted_date}\n")
+                file.write(f"Budget Summary for {self.date()}\n")
                 file.write(f"Income: ${self.statement['Income']:.2f}\n")
                 file.write(f"Total Expenses: ${self.statement['Total Expenses']:.2f}\n")
                 file.write(f"Savings: ${self.statement['Savings']:.2f}\n")
@@ -66,13 +65,13 @@ class findtransactions:
 
     def get_transactions(self, filter_type=None, filter_value=None):
         
-        for entry in self.data:
+        for entry in self.statement:
          if entry['date']:
             entry['date'] = datetime.strptime(entry['date'])
             
         filtered_data = []
         if filter_type and filter_value:
-            for entry in self.data:
+            for entry in self.statement:
                 if filter_type == 'date' and entry['date'] == datetime.strptime(entry['date']):
                     filtered_data.append(entry)
                 elif filter_type == 'amount' and float(entry['amount']) == float (filter_value):
@@ -80,7 +79,7 @@ class findtransactions:
                 elif filter_type == 'type' and entry['type'] == filter_value:
                     filtered_data.append(entry)
         else:
-            filtered_data = self.data
+            filtered_data = self.statement
             
         return filtered_data
     
@@ -119,6 +118,7 @@ sort_by = 'percentage'
 savings_goals_instance = SortedSavingsGoals(goals, income, savings, sort_by)
 
 #print(savings_goals_instance.money_goals())
+
 def main(output_file):
     months=["January", "February", "March", "April", "May", "June",
         "July", "August", "September", "October", "November", "December"]
