@@ -18,9 +18,8 @@ class FinanceManager:
         self.statement = budget  
     def date(self):
         month = self.statement.get("Month")
-        day = self.statement.get("Day")
         year = self.statement.get("Year")
-        return f"{month}-{day}-{year}"
+        return f"{month}/{year}"
     
     def save_data(self):
         try:
@@ -40,13 +39,12 @@ class FinanceManager:
 # Computes savings by subtracting total expenses from income.
 # Constructs dictionary budget containing income, total expenses, and savings.
 # Returns budget dictionary.
-def budget_per_month(month,day,year,income, expenses):
+def budget_per_month(month,year,income, expenses):
     total_expenses = sum(expenses)
     savings = income - total_expenses
     
     budget = {
         "Month":month,
-        "Day":day,
         "Year":year,
         "Income": income,
         "Total Expenses": total_expenses,
@@ -120,13 +118,13 @@ savings_goals_instance = SortedSavingsGoals(goals, income, savings, sort_by)
 #print(savings_goals_instance.money_goals())
 
 def main(output_file):
-    months=["January", "February", "March", "April", "May", "June",
-        "July", "August", "September", "October", "November", "December"]
+    months=["January",'01', "February",'02', "March",'03', "April",'04',
+            "May",'05',"June",'06',"July",'07', "August",'08', "September",'09',
+            "October",'10',"November",'11',"December",'12']
     try:
         month = input("Please enter the current month: ")
         if month not in months:
             raise ValueError (f"Invalid month, try again")
-        day = int(input("Please enter the current day of the month: "))
         year=int(input("Please enter the current year: "))
         income = float(input("Please enter your monthly income ($): "))
         num_expenses = int(input("Please enter the number of expenses that you have: "))
@@ -136,7 +134,7 @@ def main(output_file):
             expense = float(input(f"Please enter the amount for expense #{i + 1}: "))
             expenses.append(expense)
 
-        budget = budget_per_month(month,day,year, income, expenses)
+        budget = budget_per_month(month,year, income, expenses)
         budget_manager = FinanceManager(output_file)
         budget_manager.set_statement(budget) 
         budget_manager.save_data() 

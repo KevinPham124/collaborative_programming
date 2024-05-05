@@ -1,26 +1,6 @@
 
 - - - - - - - - - - - - - - - -
-Budget Summary for May/23/2003
-Income: $22.00
-Total Expenses: $15.00
-Savings: $7.00
-- - - - - - - - - - - - - - - -
-Budget Summary for March/13/2024
-Income: $23333.00
-Total Expenses: $524.00
-Savings: $22809.00
-- - - - - - - - - - - - - - - -
-Budget Summary for July/5/2012
-Income: $600.00
-Total Expenses: $71.50
-Savings: $528.50
-- - - - - - - - - - - - - - - -
-Budget Summary for January-2-2016
-Income: $900.00
-Total Expenses: $345.98
-Savings: $554.02
-- - - - - - - - - - - - - - - -
-Budget Summary for October-15-1994
-Income: $5738.00
-Total Expenses: $356.50
-Savings: $5381.50
+Budget Summary for 12/2023
+Income: $3433.65
+Total Expenses: $666.00
+Savings: $2767.65
