@@ -6,6 +6,7 @@
 # other and become one cohesive program.
 #testing
 import argparse
+import sys
 
 #Kirk Laryea      
 class FinanceManager:
@@ -54,30 +55,6 @@ def budget_per_month(month,day,year,income, expenses):
     }
     
     return budget
-
-
-months=["January", "February", "March", "April", "May", "June",
-        "July", "August", "September", "October", "November", "December"]
-month = input("Please enter the current month: ")
-if month not in months:
-    raise ValueError (f"Invalid month")
-day = int(input("Please enter the current day of the month: "))
-year=int(input("Please enter the current year: "))
-income = float(input("Please enter your monthly income ($): "))
-num_expenses = int(input("Please enter the number of expenses that you have: "))
-
-expenses = []
-for i in range(num_expenses):
-    expense = float(input(f"Please enter the amount for expense #{i + 1}: "))
-    expenses.append(expense)
-
-
-budget = budget_per_month(month,day,year, income, expenses)
-file_path = "finance.txt"  
-budget_manager = FinanceManager(file_path)
-budget_manager.set_statement(budget) 
-budget_manager.save_data() 
-    
     
 #Miles Rousseau
 from datetime import datetime
@@ -142,3 +119,38 @@ sort_by = 'percentage'
 savings_goals_instance = SortedSavingsGoals(goals, income, savings, sort_by)
 
 #print(savings_goals_instance.money_goals())
+def main(output_file):
+    months=["January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"]
+    try:
+        month = input("Please enter the current month: ")
+        if month not in months:
+            raise ValueError (f"Invalid month, try again")
+        day = int(input("Please enter the current day of the month: "))
+        year=int(input("Please enter the current year: "))
+        income = float(input("Please enter your monthly income ($): "))
+        num_expenses = int(input("Please enter the number of expenses that you have: "))
+
+        expenses = []
+        for i in range(num_expenses):
+            expense = float(input(f"Please enter the amount for expense #{i + 1}: "))
+            expenses.append(expense)
+
+        budget = budget_per_month(month,day,year, income, expenses)
+        budget_manager = FinanceManager(output_file)
+        budget_manager.set_statement(budget) 
+        budget_manager.save_data() 
+    except ValueError as ve:
+        print("Input error:", ve)
+
+    except Exception as e:
+        print("An unexpected error occurred:", e)
+    
+def parse_args(arglist):
+    parser = argparse.ArgumentParser("Finance manager")
+    parser.add_argument("output_file", help="file where output will be stored")
+    return parser.parse_args(arglist)
+
+if __name__ == "__main__":
+    args=parse_args(sys.argv[1:])
+    main(args.output_file)
