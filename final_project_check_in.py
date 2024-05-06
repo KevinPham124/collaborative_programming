@@ -115,7 +115,7 @@ savings = 500
 sort_by = 'percentage'
 savings_goals_instance = SortedSavingsGoals(goals, income, savings, sort_by)
 
-#print(savings_goals_instance.money_goals())
+print(savings_goals_instance.money_goals())
 
 def main(output_file):
     months=["January",'01', "February",'02', "March",'03', "April",'04',
