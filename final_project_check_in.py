@@ -99,39 +99,109 @@ class findtransactions:
     
     
 #Bryan Moody
-class SortedSavingsGoals:
-    def __init__(self, goals, income, savings = 0, \
-        sort_by = 'still needed'):
-        self.goals = goals
+class SavingsCalculator:
+    """
+    Calculator for determining how much money to be saved each month
+    
+    Attributes:
+        finance_goal (int): The amount of money you want to reach
+        income (int): Individual monthly income
+        savings (int): How much savings do the individuals have?
+    
+    """
+    def __init__(self, finance_goal, income, savings = 0):
+        """
+        Initializes a specified financial goal, income, and savings
+        
+        Parameters:
+            goals(list): Financial Target
+            income (int): Monthly wage
+            savings(int): How much is in the individual's savings account
+            
+        """
+        self.finance_goal = finance_goal
         self.income = income
         self.savings = savings
-        self.sort_by = sort_by
-
-    def monthly_savings_calc(self, goal):
-        remaining_to_goal = goal - self.savings
-        monthly_savings_needed = remaining_to_goal / 12
+        
+    def monthly_savings_calc(self):
+        """
+        Monthly amount needed to be saved to reach financial goal in 12 months
+        
+        Returns:
+            A dictionary with monthly savings, percentage of monthly income, and
+            a feasible statement that returns true if savings required is less
+            than or equal to 50 percent of monthly income.
+        """
+        remaining_to_goal = self.finance_goal - self.savings
+        time_frame_months = 12
+        monthly_savings_needed = remaining_to_goal / time_frame_months
+        percentage_of_income = (monthly_savings_needed / self.income) * 100
         return {
-            'savings needed': monthly_savings_needed,
-            'how much of income is needed': 
-                ((monthly_savings_needed / self.income) * 100)
+            "monthly_savings_needed": monthly_savings_needed,
+            "percentage_of_income": percentage_of_income,
+            "feasible": percentage_of_income <= 50
         }
 
-    def money_goals(self):
-        end_results = [self.monthly_savings_calc(goal) \
-            for goal in self.goals]
-        key = 'savings needed' if self.sort_by == 'still needed' \
-            else 'how much of income is needed'
-        end_results.sort(key = lambda var: var[key], reverse = True)
-        return end_results
+class SavingsGoals(SavingsCalculator):
+    """
+    Child class for sorting
+    
+    Attributes:
+        goals (list): finacial goals
+        sort_by (str): 'needed' or 'percentage' criterion to sort by
+    """
+    def __init__(self, goals, income, savings = 0, sort_by = "needed"):
+        """
+        Initializes class with goals, income, and savings lists
         
-goals = [5000, 10000, 15000]
-income = 3000
-savings = 500
+        Parameters:
+            goals (int): Financial goals
+            income (int): Monthly wages
+            savings (int): How much is in the individual's savings account
+            sort_by (str): 'needed' or 'percentage' criterion to sort by
+        """
+        super().__init__(0, income, savings)
+        self.goals = goals
+        self.sort_by = sort_by
 
-sort_by = 'percentage'
-savings_goals_instance = SortedSavingsGoals(goals, income, savings, sort_by)
+    def money_goals(self):
+        """
+        Calculates monthly savings needed for each goal
+        
+        Returns:
+            List of dictionaries
+        """
+        end_results = []
+        for goal in self.goals:
+            self.finance_goal = goal
+            result = self.monthly_savings_calc()
+            result['goal'] = goal
+            end_results.append(result)
 
-print(savings_goals_instance.money_goals())
+        if self.sort_by == "needed":
+            end_results.sort(key = lambda var: var['monthly_savings_needed'], reverse=True)
+        elif self.sort_by == "percentage":
+            end_results.sort(key = lambda var: var['percentage_of_income'], reverse=True)
+
+        return end_results
+
+if __name__ == "__main__":
+    goals_input = input("What is your financial goal? (ex: 250000): ")
+    monthly_income_input = int(input("What is your monthly income? (ex: 1000): "))
+    personal_savings_input = int(input("How much do you currently have in savings? (ex: 500): ") or 0)
+    sorted = input("Please enter a sorting criterion ('needed' or 'percentage') ") or "needed"
+
+    goals = list(map(int, goals_input.split('.')))
+
+    calculator = SavingsGoals(goals, monthly_income_input, personal_savings_input, sorted)
+    sorted_goals = calculator.money_goals()
+
+    for goal in sorted_goals:
+        print(f"Goal: ${goal['goal']} - Monthly Savings Needed: ${goal['monthly_savings_needed']:.2f}, "
+              f"Percentage of Monthly Income: {goal['percentage_of_income']:.2f}%, "
+              f"Feasibility: {'Yes' if goal['feasible'] else 'No'}")
+        
+        
 
 def main(output_file):
     months=["January",'01', "February",'02', "March",'03', "April",'04',
