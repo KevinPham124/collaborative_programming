@@ -8,7 +8,6 @@
 
 import argparse
 import sys
-from datetime import datetime
 
 #Kirk Laryea      
 class FinanceManager:
@@ -58,44 +57,45 @@ def budget_per_month(month,year,income, expenses):
 #Miles Rousseau
 
 
-class findtransactions:
+class FindTransactions:
     """
+    A class for searching specific budget summaries.
     
-    Place Holder
+    Attributes:
+        filepath(str): The file path of the budget summary file. (Finance.txt)
     
     """
-
 
     def __init__(self, filepath):
+        """
+        Initializes the FindTransactions object with given file path.
+        
+        Parameters:
+            filepath(str): The file path of the budget summary file. (Finance.txt)
+        """
+     
         self.filepath = filepath
+
+    def search_budget_summary(self, target_date):
+        """
+        Searches for a budget summary for the specified date and print it if found!
         
-
-    def get_transactions(self, filter_type=None, filter_value=None):
+        Parameters:
+            target_date(str): The target date in the format "Month/Year"
         
-        data = FinanceManager(self.path).load_data()
-        filtered_data = []
-        for entry in data:
-            if entry['date']:
-                entry['date'] = datetime.strptime(entry['date'], '%m%Y').date()
-            entry['Income'] = float(entry['Income'].replace('$', '').replace(',', ''))
-            entry['Total Expenses'] = float(entry['Total Expenses'].replace('$', '').replace(',', ''))
-            entry['Savings'] = float(entry['Savings'].replace('$', '').replace(',', ''))
-
-
-                
-        if filter_type and filter_value:
-            for entry in data:
-                if filter_type == 'date' and entry['date'] == datetime.strptime(filter_value, '%m%Y').date():
-                    filtered_data.append(entry)
-                elif filter_type == 'income' and float(entry['Income']) == float (filter_value):
-                    filtered_data.append(entry)
-                elif filter_type == 'savings' and entry['Savings'] == filter_value:
-                    filtered_data.append(entry)
-                elif filter_type == 'total_expenses' and entry ['Total Expenses'] == float(filter_value):
-                    filtered_data.append(entry)
-        else:
-            filtered_data = self.statement   
-        return filtered_data
+        """
+        with open(self.filepath, 'r') as file:
+            found = False
+            for line in file:
+                if f"Budget Summary for {target_date}" in line:
+                    found = True
+                    print(line.strip())  
+                    for _ in range(3):  
+                        print(next(file).strip())
+                    print("-" * 30)  
+            if not found:
+                print("No budget summary found for the specified date.")
+        
     
     
 #Bryan Moody
@@ -224,6 +224,15 @@ def main(output_file):
         budget_manager = FinanceManager(output_file)
         budget_manager.set_statement(budget) 
         budget_manager.save_data() 
+        
+        view_summaries = input("Would you like to view any budget summaries? (yes/no): ")
+        if view_summaries.lower() == 'yes':
+            finder = FindTransactions(output_file)
+            target_date = input("Enter the date (MM/YYYY) to search for budget transactions: ")
+            finder.search_budget_summary(target_date)
+        else:
+            print("Thank you for using our budget summary tracker!")
+        
     except ValueError as ve:
         print("Input error:", ve)
 
