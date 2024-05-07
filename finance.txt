@@ -30,3 +30,8 @@ Budget Summary for 03/2022
 Income: $236.00
 Total Expenses: $45.00
 Savings: $191.00
+- - - - - - - - - - - - - - - -
+Budget Summary for 12/2022
+Income: $234.00
+Total Expenses: $236.00
+Savings: $-2.00
