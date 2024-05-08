@@ -8,6 +8,7 @@
 
 import argparse
 import sys
+import matplotlib.pyplot as plt
 
 #Kirk Laryea      
 class FinanceManager:
@@ -95,9 +96,96 @@ class FindTransactions:
                     print("-" * 30)  
             if not found:
                 print("No budget summary found for the specified date.")
+#Miles Rousseau
+
+class DataVisualizer:
+    """
+   This class is for visualizing the budgets using a bar plot.
+   
+   Attributes:
+        filepath(str): The file path of the budget summary file. (Finance.txt)
+    """
+    def __init__(self, filepath):
+        """
+        Initializes the DataVisualizer object with the given file path.
         
-    
-    
+        Parameters:
+            filepath(str): The file path of the budget summary file. (Finance.txt)
+        """
+        self.filepath = filepath
+
+    def visualize_between_years(self, start_year, end_year):
+        """
+       Visualizes the financial data between specific years.
+       
+       Parameters:
+            start_year(int): The start of the year for filtering the data.
+            end_year(int): The end year for filtering the data.
+        """
+        try:
+            financial_data = self.read_financial_data()
+            filtered_data = self.filter_data_by_years(financial_data, start_year, end_year)
+            self.plot_data(filtered_data, start_year, end_year)
+        except Exception as e:
+            print("An error occurred during visualization:", e)
+
+    def read_financial_data(self):
+        """
+        Reads the financial data from the file.
+        
+        Returns:
+            Returns a list of dictonaries that represents the financial data.
+        """
+
+        with open(self.filepath, 'r') as file:
+            financial_data = []
+            for line in file:
+                if "Budget Summary for" in line:
+                    entry = {}
+                    entry["Year"] = int(line.split("/")[-1].strip())
+                    for _ in range(3):
+                        line = next(file).strip()
+                        key, value = line.split(": ")
+                        entry[key] = float(value.strip("$"))
+                    financial_data.append(entry)
+        return financial_data
+
+    def filter_data_by_years(self, financial_data, start_year, end_year):
+        """
+        Filters financial data to include only data between specified years in finance.txt
+        
+        Parameters:
+            financial_data(list): A list of dictonaries that represents financial data.
+            start_year(int): The start of the year for filtering the data.
+            end_year(int): The end year for filtering the data.
+            
+        Returns:
+            Also returns a list of dictonaries that represents the financial data.
+        
+        """
+        return [entry for entry in financial_data if start_year <= entry["Year"] <= end_year]
+
+    def plot_data(self, data, start_year, end_year):
+        """
+        Creates a bar plot of the persons budget savings from finance.txt
+        
+        Parameters:
+            data (list): A list of dictionaries representing the financial data.
+            start_year(int): The start of the year for filtering the data.
+            end_year(int): The end year for filtering the data.
+            
+        """
+        years = [entry["Year"] for entry in data]
+        savings = [entry["Savings"] for entry in data]
+
+        plt.bar(years, savings, color='skyblue')
+        plt.xlabel('Years')
+        plt.ylabel('Your Savings ($)')
+        plt.title('Savings Comparison between {} and {}'.format(start_year, end_year))
+        plt.yticks(range(0, int(max(savings)) + 1000, 1000))
+        plt.show()
+
+
 #Bryan Moody
 class SavingsCalculator:
     """
@@ -230,6 +318,18 @@ def main(output_file):
             finder = FindTransactions(output_file)
             target_date = input("Enter the date (MM/YYYY) to search for budget transactions: ")
             finder.search_budget_summary(target_date)
+        else:
+            print("No problem!")
+            
+            
+        compare_years = input("Would you like to compare savings goals from different years? (yes/no): ")
+        if compare_years.lower() == 'yes':
+            start_year = int(input("Enter the start year for comparison: "))
+            end_year = int(input("Enter the end year for comparison: "))
+            print("Thank you for using our budget summary tracker! Here is budget comparison using a bar plot!")
+            visualizer = DataVisualizer(output_file)
+            visualizer.visualize_between_years(start_year, end_year)
+            
         else:
             print("Thank you for using our budget summary tracker!")
         
