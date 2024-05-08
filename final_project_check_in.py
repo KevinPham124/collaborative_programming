@@ -1,15 +1,6 @@
-# INST326 Final project check-in (Group 6)
-
-# Currently, everyone has written their own functions and classes that will 
-# address certain challenges for the final project. Our next step is to analyze
-# each member's code and find out how to make them function better with each 
-# other and become one cohesive program.
-
+# INST326 Final Project (Group 6) - Personal Finance Manager
 
 import argparse
-import sys
-import matplotlib.pyplot as plt
-
 
 #Kirk Laryea      
 class Expense:
@@ -20,25 +11,7 @@ class Expense:
 
     def __repr__(self):
         return f"Expense: '{self.name}' - [{self.category}, ${self.amount:.2f}]"        
-                
-#Kevin Pham
-# Calculates total expenses by summing up expenses.
-# Computes savings by subtracting total expenses from income.
-# Constructs dictionary budget containing income, total expenses, and savings.
-# Returns budget dictionary.
-def budget_per_month(month,year,income, expenses):
-    total_expenses = sum(expenses)
-    savings = income - total_expenses
-    
-    budget = {
-        "Month":month,
-        "Year":year,
-        "Income": income,
-        "Total Expenses": total_expenses,
-        "Savings": savings
-    }
-    
-    return budget
+
     
 #Miles Rousseau
 
