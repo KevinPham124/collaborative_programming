@@ -37,6 +37,11 @@ class Expense:
         '''
         return f"Expense: '{self.name}' - [{self.category}, ${self.amount:.2f}]"        
 
+def main():
+    print(f"-- Welcome to the Personal Finance Manager! --")
+    file_path = input("Enter the file path where you want to save your expenses (ex: 'finance.txt'): ")
+    budget = float(input("Enter your budget for this month ($): "))
+    
     
 #Miles Rousseau
 
