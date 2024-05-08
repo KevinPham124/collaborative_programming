@@ -29,14 +29,31 @@ class FinanceManager:
         self.statement = {}
 
     def set_statement(self, budget):
-        
+        '''
+        Sets statements
+        Args:
+            budget(dict):dictionary contianing statement data.
+        '''
         self.statement = budget  
     def date(self):
+        '''
+        Returns formatted date.
+        Return:
+           str: A string representing month and year. 
+        '''
         month = self.statement.get("Month")
         year = self.statement.get("Year")
         return f"{month}/{year}"
     
     def save_data(self):
+        '''
+        Appends statement summary to output file(finance.txt)
+        Raises:
+            Exception: Raises error if the file catches an eerror whiles
+            appending data to the file"
+        Side Effects:
+        Modifies the output file.
+        '''
         try:
             with open(self.filepath, "a", encoding="utf-8") as file:
                 seperator='- - - - - - - - - - - - - - - -'
@@ -323,6 +340,18 @@ if __name__ == "__main__":
         
 
 def main(output_file):
+    '''
+    This function collects input from the user to be stored in the output file.
+    It also compares and shows  the user data summaries.
+    Args:
+       output_file(str): The file  were summaries are stored 
+    Raises:
+        ValueError:If user inputs invalid month
+        Exception: If an inexpected error occurs
+    Side efffects;
+        -Reads data form output_file and prints summary.
+        -Creats instances of the FInanceMannager class,
+    '''
     months=["January",'01', "February",'02', "March",'03', "April",'04',
             "May",'05',"June",'06',"July",'07', "August",'08', "September",'09',
             "October",'10',"November",'11',"December",'12']
@@ -373,6 +402,9 @@ def main(output_file):
         print("An unexpected error occurred:", e)
     
 def parse_args(arglist):
+    '''
+    
+    '''
     parser = argparse.ArgumentParser("Finance manager")
     parser.add_argument("output_file", help="file where output will be stored")
     return parser.parse_args(arglist)
