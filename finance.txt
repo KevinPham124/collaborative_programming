@@ -122,3 +122,18 @@ Income: $2300.00
 Total Expenses: $1454.00
 Savings: $846.00
 
+- - - - - - - - - - - - - - - -
+Budget Summary for May/2024
+Income: $1000.00
+Total Expenses: $68.00
+Savings: $932.00
+- - - - - - - - - - - - - - - -
+Budget Summary for June/2021
+Income: $8000.00
+Total Expenses: $345.00
+Savings: $7655.00
+- - - - - - - - - - - - - - - -
+Budget Summary for October/2007
+Income: $5700.00
+Total Expenses: $345.65
+Savings: $5354.35

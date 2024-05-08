@@ -352,9 +352,7 @@ def main(output_file):
         -Reads data form output_file and prints summary.
         -Creates instances of the FInanceMannager class.
     '''
-    months=["January",'01', "February",'02', "March",'03', "April",'04',
-            "May",'05',"June",'06',"July",'07', "August",'08', "September",'09',
-            "October",'10',"November",'11',"December",'12']
+    months=['01', '02', '03', '04','05','06','07','08','09','10','11','12']
     try:
         month = input("Please enter the current month: ")
         if month not in months:
