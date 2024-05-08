@@ -12,59 +12,14 @@ import matplotlib.pyplot as plt
 
 
 #Kirk Laryea      
-class FinanceManager:
-    '''
-    A class to manage financial statments and adds the statment to a file
-    Attributes:
-        filepath(str):Path to file were budget is saved
-        statement(dict):dictionary contianing data.
-    '''
-    def __init__(self, filepath):
-        '''
-        Initilaizes file path and statement
-        Args:
-            filepath(str):Path to file were budget is saved
-        '''
-        self.filepath = filepath
-        self.statement = {}
+class Expense:
+    def init(self, name, category, amount):
+        self.name = name
+        self.category = category
+        self.amount = amount
 
-    def set_statement(self, budget):
-        '''
-        Sets statements
-        Args:
-            budget(dict):dictionary contianing statement data.
-        '''
-        self.statement = budget  
-    def date(self):
-        '''
-        Returns formatted date.
-        Returns:
-           str: A string representing month and year. 
-        '''
-        month = self.statement.get("Month")
-        year = self.statement.get("Year")
-        return f"{month}/{year}"
-    
-    def save_data(self):
-        '''
-        Appends statement summary to output file(finance.txt)
-        Raises:
-            Exception: Raises error if the file catches an eerror whiles
-            appending data to the file"
-        Side Effects:
-            Modifies the output file.
-        '''
-        try:
-            with open(self.filepath, "a", encoding="utf-8") as file:
-                seperator='- - - - - - - - - - - - - - - -'
-                file.write(f'{seperator}\n')
-                file.write(f"Budget Summary for {self.date()}\n")
-                file.write(f"Income: ${self.statement['Income']:.2f}\n")
-                file.write(f"Total Expenses: ${self.statement['Total Expenses']:.2f}\n")
-                file.write(f"Savings: ${self.statement['Savings']:.2f}\n")
-            print("Budget summary saved successfully.")
-        except Exception as e:
-            print("Error saving data:", e)        
+    def repr(self):
+        return f"Expense: '{self.name}' - [{self.category}, ${self.amount:.2f}]"        
                 
 #Kevin Pham
 # Calculates total expenses by summing up expenses.
