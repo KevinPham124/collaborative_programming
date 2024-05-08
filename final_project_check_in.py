@@ -38,7 +38,7 @@ class FinanceManager:
     def date(self):
         '''
         Returns formatted date.
-        Return:
+        Returns:
            str: A string representing month and year. 
         '''
         month = self.statement.get("Month")
@@ -52,7 +52,7 @@ class FinanceManager:
             Exception: Raises error if the file catches an eerror whiles
             appending data to the file"
         Side Effects:
-        Modifies the output file.
+            Modifies the output file.
         '''
         try:
             with open(self.filepath, "a", encoding="utf-8") as file:
@@ -350,7 +350,7 @@ def main(output_file):
         Exception: If an inexpected error occurs
     Side efffects;
         -Reads data form output_file and prints summary.
-        -Creats instances of the FInanceMannager class,
+        -Creates instances of the FInanceMannager class.
     '''
     months=["January",'01', "February",'02', "March",'03', "April",'04',
             "May",'05',"June",'06',"July",'07', "August",'08', "September",'09',
@@ -402,8 +402,15 @@ def main(output_file):
         print("An unexpected error occurred:", e)
     
 def parse_args(arglist):
-    '''
-    
+    '''Parse command-line arguments.
+    Only one argument is required:
+        output_file(str): Path to file were summaries are stored.
+    Args:
+        arglist (list of str): list of command-line arguments.
+    Returns:
+        namespace: the parsed arguments as a namespace. The following attribute
+        will be defined: output_file.
+
     '''
     parser = argparse.ArgumentParser("Finance manager")
     parser.add_argument("output_file", help="file where output will be stored")
