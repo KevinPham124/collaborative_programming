@@ -13,11 +13,23 @@ import matplotlib.pyplot as plt
 
 #Kirk Laryea      
 class FinanceManager:
+    '''
+    A class to manage financial statments and adds the statment to a file
+    Attributes:
+        filepath(str):Path to file were budget is saved
+        statement(dict):dictionary contianing data.
+    '''
     def __init__(self, filepath):
+        '''
+        Initilaizes file path and statement
+        Args:
+            filepath(str):Path to file were budget is saved
+        '''
         self.filepath = filepath
         self.statement = {}
 
     def set_statement(self, budget):
+        
         self.statement = budget  
     def date(self):
         month = self.statement.get("Month")
