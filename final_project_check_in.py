@@ -8,10 +8,8 @@
 
 import argparse
 import sys
-<<<<<<< HEAD
-=======
 import matplotlib.pyplot as plt
->>>>>>> origin/main
+
 
 #Kirk Laryea      
 class FinanceManager:
@@ -86,7 +84,7 @@ class FindTransactions:
         
         Parameters:
             target_date(str): The target date in the format "Month/Year"
-<<<<<<< HEAD
+
         
         """
         with open(self.filepath, 'r') as file:
@@ -103,9 +101,8 @@ class FindTransactions:
         
     
     
-=======
-        
-        """
+
+ 
         with open(self.filepath, 'r') as file:
             found = False
             for line in file:
@@ -207,7 +204,7 @@ class DataVisualizer:
         plt.show()
 
 
->>>>>>> origin/main
+
 #Bryan Moody
 class SavingsCalculator:
     """
@@ -341,8 +338,7 @@ def main(output_file):
             target_date = input("Enter the date (MM/YYYY) to search for budget transactions: ")
             finder.search_budget_summary(target_date)
         else:
-<<<<<<< HEAD
-=======
+
             print("No problem!")
             
             
@@ -355,7 +351,7 @@ def main(output_file):
             visualizer.visualize_between_years(start_year, end_year)
             
         else:
->>>>>>> origin/main
+
             print("Thank you for using our budget summary tracker!")
         
     except ValueError as ve:
