@@ -122,3 +122,8 @@ Income: $2300.00
 Total Expenses: $1454.00
 Savings: $846.00
 
+- - - - - - - - - - - - - - - -
+Budget Summary for 01/2001
+Income: $4000.00
+Total Expenses: $680.00
+Savings: $3320.00
