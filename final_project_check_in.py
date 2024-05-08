@@ -4,7 +4,7 @@ import argparse
 
 #Kirk Laryea      
 class Expense:
-    """
+    '''
     A class to represent a single financial expense.
 
     Attributes:
@@ -14,21 +14,27 @@ class Expense:
 
     Methods:
         __repr__(): Returns a string representation of the expense including the name, category, and amount.
-    """
+    '''
     def __init__(self, name, category, amount):
-         """
+         '''
         Initializes the Expense class with a name, category, and amount.
 
         Args:
             name (str): The name of the expense.
             category (str): The category to which the expense belongs.
             amount (float): The cost of the expense.
-        """
+        '''
         self.name = name
         self.category = category
         self.amount = amount
 
     def __repr__(self):
+        '''
+        Provides a string representation of the expense, including its name, category, and amount.
+
+        Returns:
+            str: A formatted string showing the name, category, and amount of the expense.
+        '''
         return f"Expense: '{self.name}' - [{self.category}, ${self.amount:.2f}]"        
 
     
