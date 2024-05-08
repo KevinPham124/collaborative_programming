@@ -129,20 +129,6 @@ class FindTransactions:
                 print("No budget summary found for the specified date.")
         
     
-    
-
- 
-        with open(self.filepath, 'r') as file:
-            found = False
-            for line in file:
-                if f"Budget Summary for {target_date}" in line:
-                    found = True
-                    print(line.strip())  
-                    for _ in range(3):  
-                        print(next(file).strip())
-                    print("-" * 30)  
-            if not found:
-                print("No budget summary found for the specified date.")
 #Miles Rousseau
 
 class DataVisualizer:

@@ -123,6 +123,7 @@ Total Expenses: $1454.00
 Savings: $846.00
 
 - - - - - - - - - - - - - - - -
+<<<<<<< HEAD
 Budget Summary for May/2024
 Income: $1000.00
 Total Expenses: $68.00
@@ -137,3 +138,14 @@ Budget Summary for October/2007
 Income: $5700.00
 Total Expenses: $345.65
 Savings: $5354.35
+
+Budget Summary for 01/2001
+Income: $4000.00
+Total Expenses: $680.00
+Savings: $3320.00
+
+- - - - - - - - - - - - - - - -
+Budget Summary for 10/2003
+Income: $234432.00
+Total Expenses: $234.00
+Savings: $234198.00
