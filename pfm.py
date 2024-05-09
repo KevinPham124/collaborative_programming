@@ -1,12 +1,37 @@
 # INST326 Final Project (Group 6) - Personal Finance Manager
 
 class Expense:
+    '''
+    A class to represent a single financial expense.
+
+    Attributes:
+        name (str): The name of the expense (e.g.mcdonalds).
+        category (str): The category of the expense (e.g.'Food').
+        amount (float): Theamount of the expense.
+
+    Methods:
+        __repr__(): Returns a string representation of the expense including the name, category, and amount.
+    '''
     def __init__(self, name, category, amount):
+        '''
+        Initializes the Expense class with a name, category, and amount.
+
+        Args:
+            name (str): The name of the expense.
+            category (str): The category to which the expense belongs.
+            amount (float): The cost of the expense.
+        '''
         self.name = name
         self.category = category
         self.amount = amount
         
     def __repr__(self):
+        '''
+        Provides a string representation of the expense, including its name, category, and amount.
+
+        Returns:
+            str: A formatted string showing the name, category, and amount of the expense.
+        '''
         return f"Expense: '{self.name}' - [{self.category}, ${self.amount:.2f}]"
 
 def main():
@@ -30,6 +55,15 @@ def main():
             delete_expense(file_path)
 
 def get_expense():
+     '''
+    Prompts the user to input the details of an expense and creates an Expense object.
+    
+    Returns:
+        Expense: An instance of the Expense class with the specified name, category, and amount.
+    
+    Raises:
+        ValueError: If the selected category index is not within the valid range.
+    '''
     print(f"Getting User Expense...")
     expense_name = input("Please enter the name of the expense you want to add: ")
     expense_amount = float(input("Please enter the amount of that expense ($): "))
@@ -60,6 +94,16 @@ def get_expense():
             print("Please enter a valid category!")
 
 def save_expense(expense: Expense, file_path):
+    """
+    This method saves the expense record to a file
+
+    Parameters:
+        espense (Expense): an instance of the Ecpence class containing the saved details
+        file_path(str): The path to a file where the espense record will be appended or created
+
+    Side Effects :
+        Edits file_path with espense data
+    """
     print(f"Saving User Expense: {expense} to {file_path}")
     with open(file_path, "a") as f:
         f.write(f"{expense.name}, {expense.amount}, {expense.category}\n")
@@ -97,6 +141,15 @@ def summarize_expenses(file_path, budget):
     print(f"Remaining Budget: {remaining_budget:.2f}")
 
 def delete_expense(file_path):
+    """
+    This function deletes an unwanted expense entry from the file based on the name that is provided
+
+    Parameters:
+        file_path (str): The path to the file that the expanse entry is supposed to be deleted from
+    
+    Side Efects:
+        Modifies the file_path by removing the espense entry based on user input
+    """
     expense_to_delete = input("Please enter the name of the expense you want to delete: ")
     with open(file_path, "r+") as f:
         lines = f.readlines()
@@ -117,4 +170,3 @@ def delete_expense(file_path):
 
 if __name__ == "__main__":
     main()
-
