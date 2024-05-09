@@ -56,7 +56,17 @@ def main():
         
         if choice == 'delete':
             delete_expense(file_path)
+            
 def get_expense():
+    '''
+    Prompts the user to input the details of an expense and creates an Expense object.
+    
+    Returns:
+        Expense: An instance of the Expense class with the specified name, category, and amount.
+    
+    Raises:
+        ValueError: If the selected category index is not within the valid range.
+    '''
     print(f"Getting User Expense...")
     expense_name = input("Please enter the name of the expense you want to add: ")
     expense_amount = float(input("Please enter the amount of that expense ($): "))
