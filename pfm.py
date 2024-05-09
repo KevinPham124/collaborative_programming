@@ -155,18 +155,12 @@ def delete_expense(file_path):
         lines = f.readlines()
         f.seek(0)
         new_lines = []
-        deleted = False
-        for line in lines:
-            if expense_to_delete not in line:
-                new_lines.append(line)
-            else:
-                deleted = True
+        deleted = any(expense_to_delete in line for line in lines) 
+        new_lines = [line for line in lines if expense_to_delete not in line] 
+    
         f.writelines(new_lines)
 
-    if deleted:
-        print(f"Expense '{expense_to_delete}' has been deleted.")
-    else:
-        print(f"Expense '{expense_to_delete}' not found.")
+    print(f"Expense '{expense_to_delete}' {'has been deleted.' if deleted else 'not found.'}")
 
 if __name__ == "__main__":
     main()
