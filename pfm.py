@@ -35,6 +35,18 @@ class Expense:
         return f"Expense: '{self.name}' - [{self.category}, ${self.amount:.2f}]"
 
 def main():
+    """
+    Manages user's finances by tracking expenses and calculating budget.
+    
+    Usage:
+        1. Prompts the user to enter a file path where they want to save their expenses.
+        2. Enter a budget amount for the month.
+        3. Add expenses, delete expenses, or exit the program based on user choice.
+        4. If choosing to delete, it prompts for which expense to remove.
+    
+    Returns:
+        None
+    """
     print(f"-- Welcome to the Personal Finance Manager! --")
     file_path = input("Enter the file path where you want to save your expenses (ex: 'finance.txt'): ")
     budget = float(input("Enter your budget for this month ($): "))
