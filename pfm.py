@@ -56,6 +56,35 @@ def main():
         
         if choice == 'delete':
             delete_expense(file_path)
+def get_expense():
+    print(f"Getting User Expense...")
+    expense_name = input("Please enter the name of the expense you want to add: ")
+    expense_amount = float(input("Please enter the amount of that expense ($): "))
+    expense_categories = [
+        "Home", 
+        "Car",
+        "Food",
+        "Work",
+        "Subscription",
+        "Misc.",
+    ]
+
+    while True:
+        print("Please select a category: ")
+        for i, category_name in enumerate(expense_categories):
+            print(f"{i + 1}, {category_name}")
+
+        value_range = f"[1 - {len(expense_categories)}]"
+        selected_index = int(input(f"Please enter a category number {value_range}: "))
+
+        if selected_index in range(1, len(expense_categories) + 1):
+            selected_category = expense_categories[selected_index - 1]
+            new_expense = Expense(
+                name=expense_name, category=selected_category, amount=expense_amount
+            )
+            return new_expense
+        else:
+            print("Please enter a valid category!")
 #Miles Rousseau
 
 
