@@ -1,1 +1,2 @@
-
+Bars, 90.0, Fun
+Gokarts, 50.0, Fun

@@ -1,37 +1,34 @@
-# INST326 Final Project (Group 6) - Personal Finance Manager
+import matplotlib.pyplot as plt
 
 class Expense:
-    '''
+    """
     A class to represent a single financial expense.
-
+    
     Attributes:
-        name (str): The name of the expense (e.g.mcdonalds).
-        category (str): The category of the expense (e.g.'Food').
-        amount (float): Theamount of the expense.
-
+        name (str): The name of the expense (e.g.mcdonalds)
+        category(str): The category of the expense (e.g'Food').
+        amount(float): The amount of the expense.
+        
     Methods:
-        __repr__(): Returns a string representation of the expense including the name, category, and amount.
-    '''
+        __repr__(): Returns a string representation of the expense including name,
+        category, and amount.
+    
+    """
     def __init__(self, name, category, amount):
-        '''
+        """
         Initializes the Expense class with a name, category, and amount.
-
+        
         Args:
-            name (str): The name of the expense.
-            category (str): The category to which the expense belongs.
-            amount (float): The cost of the expense.
-        '''
+            name(str): The name of the expense.
+            category(str): The category to which the expense belongs.
+            amount(float): The cost of the expense.
+        
+        """
         self.name = name
         self.category = category
         self.amount = amount
         
     def __repr__(self):
-        '''
-        Provides a string representation of the expense, including its name, category, and amount.
-
-        Returns:
-            str: A formatted string showing the name, category, and amount of the expense.
-        '''
         return f"Expense: '{self.name}' - [{self.category}, ${self.amount:.2f}]"
 
 def main():
@@ -48,17 +45,27 @@ def main():
         None
     """
     print(f"-- Welcome to the Personal Finance Manager! --")
-    file_path = input("Enter the file path where you want to save your expenses (ex: 'finance.txt'): ")
-    budget = float(input("Enter your budget for this month ($): "))
+    file_path = input("Enter the file path to save your expenses (e.g.: 'finance.txt'): ")
+    budget = float(input("Enter your budget for this month: "))
     
     while True:
         expense = get_expense()
         
         save_expense(expense, file_path)
         
-        summarize_expenses(file_path, budget)
+        sort_expenses_by_category(file_path)
+        amount_by_category = summarize_expenses(file_path, budget)
         
-        choice = input("Do you want to add more expenses, delete an expense, or exit the program? (add/delete/exit): ").lower()
+        graph_choice = input("Would you like to see a graph of your expenses for this month? (yes/no): ").lower()
+        if graph_choice == "yes":
+            generate_bar_graph(amount_by_category)
+        elif graph_choice == "no":
+            pass
+        else:
+            print("Invalid choice. Please enter 'yes' or 'no'.")
+            continue
+        
+        choice = input("Would you like to add more expenses, delete an expense, or exit the program? (add/delete/exit): ").lower()
         
         if choice == 'exit':
             break  
@@ -67,7 +74,7 @@ def main():
             delete_expense(file_path)
 
 def get_expense():
-     '''
+    """
     Prompts the user to input the details of an expense and creates an Expense object.
     
     Returns:
@@ -75,16 +82,17 @@ def get_expense():
     
     Raises:
         ValueError: If the selected category index is not within the valid range.
-    '''
+    """
     print(f"Getting User Expense...")
     expense_name = input("Please enter the name of the expense you want to add: ")
-    expense_amount = float(input("Please enter the amount of that expense ($): "))
+    expense_amount = float(input("Please enter the amount of that expense: "))
     expense_categories = [
-        "Home", 
-        "Car",
-        "Food",
+        "Food", 
+        "Home",
         "Work",
+        "Fun",
         "Subscription",
+        "Car",
         "Misc.",
     ]
 
@@ -121,6 +129,17 @@ def save_expense(expense: Expense, file_path):
         f.write(f"{expense.name}, {expense.amount}, {expense.category}\n")
 
 def summarize_expenses(file_path, budget):
+    """
+    Summarizes user expenses from a specified file and calculates the total spent,
+    expenses by category, and remaining budget.
+
+    Args:
+        file_path (str): Path to the file containing expense records.
+        budget (float): Total budget amount for the month.
+
+    Returns:
+        None: This function does not return any value but prints a summary of expenses.
+    """
     print(f"Summarizing User Expense...")
     expenses = []
     with open(file_path, "r") as f:
@@ -133,6 +152,9 @@ def summarize_expenses(file_path, budget):
             )
             print(line_expense)
             expenses.append(line_expense)
+    if not expenses:
+        print ("No record")
+        return {}
 
     amount_by_category = {}
     for expense in expenses:
@@ -151,6 +173,68 @@ def summarize_expenses(file_path, budget):
     
     remaining_budget = budget - total_spent
     print(f"Remaining Budget: {remaining_budget:.2f}")
+    
+    return amount_by_category
+
+def generate_bar_graph(amount_by_category):
+    """
+    Miles Rousseau
+    
+    Visualizes the budgets using a bar plot
+    
+    Parameters:
+        amount_by_category (dict): A dictonary that contains expenses
+        grouped by the category. (Fun, Work, Misc, Home, Food)
+    
+    Returns:
+        None
+    
+    """
+    categories = list(amount_by_category.keys())
+    amounts = list(amount_by_category.values())
+
+    plt.figure(figsize=(10, 6))
+    plt.bar(categories, amounts, color='skyblue')
+    plt.xlabel('Expense Categories')
+    plt.ylabel('Amount Spent ($)')
+    plt.title('Expenses by Category')
+    plt.xticks(rotation=45) 
+    plt.tight_layout()
+    plt.show()
+
+
+def sort_expenses_by_category(file_path):
+    """
+    Miles Rousseau
+    
+    Sorting the expenses within the file by the category.
+    Rewrites the file.
+    
+    Parameters:
+    filepath(str): The path to the file
+    
+    Returns:
+        None
+        
+    """
+    category_expenses = {}
+    with open(file_path, "r") as f:
+        lines = f.readlines()
+        for line in lines:
+            expense_name, expense_amount, expense_category = line.strip().split(", ")
+            expense = Expense(name=expense_name, amount=float(expense_amount), category=expense_category)
+            if expense.category in category_expenses:
+                category_expenses[expense.category].append(expense)
+            else:
+                category_expenses[expense.category] = [expense]
+
+    for category in category_expenses:
+        category_expenses[category].sort(key=lambda x: x.name.lower())
+
+    with open(file_path, "w") as f:
+        for category in sorted(category_expenses.keys()):
+            for expense in category_expenses[category]:
+                f.write(f"{expense.name}, {expense.amount}, {expense.category}\n")
 
 def delete_expense(file_path):
     """
@@ -169,7 +253,7 @@ def delete_expense(file_path):
         new_lines = []
         deleted = any(expense_to_delete in line for line in lines) 
         new_lines = [line for line in lines if expense_to_delete not in line] 
-    
+        f.truncate(0)  
         f.writelines(new_lines)
 
     print(f"Expense '{expense_to_delete}' {'has been deleted.' if deleted else 'not found.'}")
