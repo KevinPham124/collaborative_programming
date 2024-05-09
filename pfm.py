@@ -163,5 +163,15 @@ def summarize_expenses(file_path, budget):
         else:
             amount_by_category[key] = expense.amount
 
+    print("Expenses By Category: ")
+    for key, amount in amount_by_category.items():
+        print(f"    {key}: ${amount:.2f}")
+        
+    total_spent = sum(ex.amount for ex in expenses)
+    print(f"You have spent {total_spent:.2f} this month!")
+    
+    remaining_budget = budget - total_spent
+    print(f"Remaining Budget: {remaining_budget:.2f}")
+
 if __name__ == "__main__":
     main()
