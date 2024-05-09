@@ -112,6 +112,35 @@ def save_expense(expense: Expense, file_path):
 with open(file_path, "a") as f:
         f.write(f"{expense.name}, {expense.amount}, {expense.category}\n")
 
+def delete_expense(file_path):
+    """
+    This function deletes an unwanted expense entry from the file based on the name that is provided
+
+    Parameters:
+        file_path (str): The path to the file that the expanse entry is supposed to be deleted from
+    
+    Side Efects:
+        Modifies the file_path by removing the espense entry based on user input
+    """
+    expense_to_delete = input("Please enter the name of the expense you want to delete: ")
+    with open(file_path, "r+") as f:
+        lines = f.readlines()
+        f.seek(0)
+        new_lines = []
+        deleted = False
+        for line in lines:
+            if expense_to_delete not in line:
+                new_lines.append(line)
+            else:
+                deleted = True
+        f.truncate(0)  
+        f.writelines(new_lines)
+
+    if deleted:
+        print(f"Expense '{expense_to_delete}' has been deleted.")
+    else:
+        print(f"Expense '{expense_to_delete}' not found.")
+
 
 def main(output_file):
     '''
