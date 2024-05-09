@@ -97,8 +97,19 @@ def get_expense():
             print("Please enter a valid category!")
 
 def save_expense(expense: Expense, file_path):
+     """
+    This method saves the expense record to a file
+
+    Parameters:
+        espense (Expense): an instance of the Ecpence class containing the saved details
+        file_path( str: The path to a file where the espense record will be appended or created
+
+    Side Effects :
+        Edits file_path with espense data
+    """
     print(f"Saving User Expense: {expense} to {file_path}")
-    with open(file_path, "a") as f:
+    
+with open(file_path, "a") as f:
         f.write(f"{expense.name}, {expense.amount}, {expense.category}\n")
 
 
