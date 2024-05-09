@@ -141,81 +141,27 @@ def delete_expense(file_path):
     else:
         print(f"Expense '{expense_to_delete}' not found.")
 
+def summarize_expenses(file_path, budget):
+    print(f"Summarizing User Expense...")
+    expenses = []
+    with open(file_path, "r") as f:
+        lines = f.readlines()
+        for line in lines:
+            stripped_line = line.strip()
+            expense_name, expense_amount, expense_category = stripped_line.split(", ")
+            line_expense = Expense(
+                name=expense_name, amount=float(expense_amount), category=expense_category
+            )
+            print(line_expense)
+            expenses.append(line_expense)
 
-def main(output_file):
-    '''
-    This function collects input from the user to be stored in the output file.
-    It also compares and shows  the user data summaries.
-    Args:
-       output_file(str): The file  were summaries are stored 
-    Raises:
-        ValueError:If user inputs invalid month
-        Exception: If an inexpected error occurs
-    Side efffects;
-        -Reads data form output_file and prints summary.
-        -Creates instances of the FInanceMannager class.
-    '''
-    months=['01', '02', '03', '04','05','06','07','08','09','10','11','12']
-    try:
-        month = input("Please enter the current month: ")
-        if month not in months:
-            raise ValueError (f"Invalid month, try again")
-        year=int(input("Please enter the current year: "))
-        income = float(input("Please enter your monthly income ($): "))
-        num_expenses = int(input("Please enter the number of expenses that you have: "))
-
-        expenses = []
-        for i in range(num_expenses):
-            expense = float(input(f"Please enter the amount for expense #{i + 1}: "))
-            expenses.append(expense)
-
-        budget = budget_per_month(month,year, income, expenses)
-        budget_manager = FinanceManager(output_file)
-        budget_manager.set_statement(budget) 
-        budget_manager.save_data() 
-        
-        view_summaries = input("Would you like to view any budget summaries? (yes/no): ")
-        if view_summaries.lower() == 'yes':
-            finder = FindTransactions(output_file)
-            target_date = input("Enter the date (MM/YYYY) to search for budget transactions: ")
-            finder.search_budget_summary(target_date)
+    amount_by_category = {}
+    for expense in expenses:
+        key = expense.category
+        if key in amount_by_category:
+            amount_by_category[key] += expense.amount
         else:
-
-            print("No problem!")
-            
-            
-        compare_years = input("Would you like to compare savings goals from different years? (yes/no): ")
-        if compare_years.lower() == 'yes':
-            start_year = int(input("Enter the start year for comparison: "))
-            end_year = int(input("Enter the end year for comparison: "))
-            print("Thank you for using our budget summary tracker! Here is budget comparison using a bar plot!")
-            visualizer = DataVisualizer(output_file)
-            visualizer.visualize_between_years(start_year, end_year)
-            
-        else:
-
-            print("Thank you for using our budget summary tracker!")
-        
-    except ValueError as ve:
-        print("Input error:", ve)
-
-    except Exception as e:
-        print("An unexpected error occurred:", e)
-    
-def parse_args(arglist):
-    '''Parse command-line arguments.
-    Only one argument is required:
-        output_file(str): Path to file were summaries are stored.
-    Args:
-        arglist (list of str): list of command-line arguments.
-    Returns:
-        namespace: the parsed arguments as a namespace. The following attribute
-        will be defined: output_file.
-
-    '''
-    parser = argparse.ArgumentParser("Finance manager")
-    parser.add_argument("output_file", help="file where output will be stored")
-    return parser.parse_args(arglist)
+            amount_by_category[key] = expense.amount
 
 if __name__ == "__main__":
     main()
