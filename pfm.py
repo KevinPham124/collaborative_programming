@@ -102,7 +102,7 @@ def save_expense(expense: Expense, file_path):
 
     Parameters:
         espense (Expense): an instance of the Ecpence class containing the saved details
-        file_path( str: The path to a file where the espense record will be appended or created
+        file_path(str): The path to a file where the espense record will be appended or created
 
     Side Effects :
         Edits file_path with espense data
