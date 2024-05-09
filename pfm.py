@@ -1,5 +1,5 @@
 import matplotlib.pyplot as plt
-
+# Group 6 Project.
 class Expense:
     """
     A class to represent a single financial expense.
