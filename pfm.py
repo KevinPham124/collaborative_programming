@@ -42,7 +42,20 @@ def main():
     file_path = input("Enter the file path where you want to save your expenses (ex: 'finance.txt'): ")
     budget = float(input("Enter your budget for this month ($): "))
     
-    
+    while True:
+        expense = get_expense()
+        
+        save_expense(expense, file_path)
+        
+        summarize_expenses(file_path, budget)
+        
+        choice = input("Do you want to add more expenses, delete an expense, or exit the program? (add/delete/exit): ").lower()
+        
+        if choice == 'exit':
+            break  
+        
+        if choice == 'delete':
+            delete_expense(file_path)
 #Miles Rousseau
 
 
